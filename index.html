@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador KWIC - Corpus Lingüístico</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: #3498db;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .stats {
+            margin: 15px 0;
+            font-size: 15px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .distribucion {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        .subcorpus-col {
+            width: 12%;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .archivo-col {
+            width: 18%;
+            color: #7f8c8d;
+            font-size: 0.85em;
+            word-break: break-all;
+        }
+        .izq {
+            text-align: right;
+            width: 32%;
+            color: #444;
+        }
+        .kw {
+            text-align: center;
+            width: 6%;
+            font-weight: bold;
+            color: #c0392b;
+            background-color: #fdf2e9;
+            border-radius: 3px;
+        }
+        .der {
+            text-align: left;
+            width: 32%;
+            color: #444;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Buscador de Concordancias KWIC</h1>
+        <p>Consulta el contexto inmediato de cualquier término en el corpus de manera segura.</p>
+
+        <div class="search-box">
+            <input type="text" id="term" placeholder="Escribe una palabra (ej. mente, razón...)" onkeypress="if(event.key==='Enter') buscar()">
+            <button onclick="buscar()">Buscar</button>
+        </div>
+
+        <div id="stats" class="stats"></div>
+        <div id="distribucion" class="distribucion"></div>
+
+        <table id="tabla-kwic" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Subcorpus</th>
+                    <th>Documento</th>
+                    <th style="text-align: right;">Contexto Izquierdo</th>
+                    <th style="text-align: center;">Término</th>
+                    <th style="text-align: left;">Contexto Derecho</th>
+                </tr>
+            </thead>
+            <tbody id="resultados-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Dirección de tu servidor Flask local
+        const API_URL = "https://menscorpora.pythonanywhere.com/api/buscar";
+
+        async function buscar() {
+            const query = document.getElementById('term').value.trim();
+            if (!query) return;
+
+            document.getElementById('stats').innerText = "Buscando coincidencias en los 21.7 millones de palabras...";
+            document.getElementById('distribucion').innerText = "";
+            document.getElementById('tabla-kwic').style.display = 'none';
+            
+            try {
+                const res = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
+                const data = await res.json();
+
+                if (data.error) {
+                    document.getElementById('stats').innerText = data.error;
+                    return;
+                }
+
+                if (data.total === 0) {
+                    document.getElementById('stats').innerText = "No se encontraron coincidencias para la palabra consultada.";
+                    return;
+                }
+
+                document.getElementById('stats').innerText = `Total de ocurrencias encontradas: ${data.total.toLocaleString()}`;
+                
+                // Mostrar distribución por subcorpus
+                if (data.distribucion) {
+                    const distTexto = Object.entries(data.distribucion)
+                        .map(([sub, cant]) => `<b>${sub}:</b> ${cant.toLocaleString()}`)
+                        .join(" | ");
+                    document.getElementById('distribucion').innerHTML = `Distribución: ${distTexto}`;
+                }
+
+                const tbody = document.getElementById('resultados-body');
+                tbody.innerHTML = '';
+
+                data.resultados.forEach(r => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="subcorpus-col">${r.subcorpus}</td>
+                        <td class="archivo-col">${r.id_archivo}</td>
+                        <td class="izq">${r.contexto_izq}</td>
+                        <td class="kw">${r.palabra_clave}</td>
+                        <td class="der">${r.contexto_der}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                document.getElementById('tabla-kwic').style.display = 'table';
+
+            } catch (err) {
+                document.getElementById('stats').innerText = "Error: No se pudo conectar con el servidor local. Asegúrate de que 'python app.py' está corriendo.";
+            }
+        }
+    </script>
+</body>
+</html>
