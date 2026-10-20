@@ -6,21 +6,21 @@
     <title>Mens Corpora - Plataforma de Consulta Lingüística</title>
     <style>
         :root {
-            --primary-color: #4a7c59;          /* Verde sabio suave y legible */
-            --primary-hover: #3b6346;          /* Verde oscuro para efectos hover */
-            --header-bg: #e8f2ea;              /* Verde pastel pálido para la cabecera */
-            --header-title: #1b4332;           /* Verde bosque profundo para el título */
-            --header-subtitle: #4a7c59;        /* Verde suave para subtítulo */
-            --bg-color: #f4f7f4;               /* Fondo general gris-verde muy suave */
-            --card-bg: #ffffff;                /* Blanco puro para tarjetas */
-            --text-color: #1a2e26;             /* Carbón oscuro con matiz verde */
-            --text-muted: #5a6e62;             /* Texto secundario suave */
-            --border-color: #dce6df;           /* Bordes sutiles en verde ceniza */
-            --info-bg: #eaf4f0;                 /* Fondo de la barra de información */
-            --kw-bg: #d8f3dc;                  /* Resaltado de palabra clave en verde pastel menta */
-            --kw-color: #1b4332;               /* Texto de palabra clave en verde profundo */
-            --badge-bg: #52b788;               /* Insignia de corpus */
-            --btn-export: #2d6a4f;             /* Botón exportar CSV */
+            --primary-color: #4a7c59;
+            --primary-hover: #3b6346;
+            --header-bg: #e8f2ea;
+            --header-title: #1b4332;
+            --header-subtitle: #4a7c59;
+            --bg-color: #f4f7f4;
+            --card-bg: #ffffff;
+            --text-color: #1a2e26;
+            --text-muted: #5a6e62;
+            --border-color: #dce6df;
+            --info-bg: #eaf4f0;
+            --kw-bg: #d8f3dc;
+            --kw-color: #1b4332;
+            --badge-bg: #52b788;
+            --btn-export: #2d6a4f;
             --btn-export-hover: #1b4332;
         }
 
@@ -33,7 +33,6 @@
             line-height: 1.6;
         }
 
-        /* Cabecera Principal */
         header {
             background-color: var(--header-bg);
             color: var(--header-title);
@@ -64,7 +63,6 @@
             padding: 0 20px;
         }
 
-        /* Tarjetas / Secciones */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -80,12 +78,8 @@
             font-size: 1.5rem;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        /* Controles del Buscador */
         .filters-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr auto;
@@ -110,7 +104,6 @@
             box-sizing: border-box;
             background-color: #fafdfa;
             color: var(--text-color);
-            transition: all 0.2s ease;
         }
 
         input[type="text"]:focus, select:focus {
@@ -128,15 +121,10 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.2s, transform 0.1s;
         }
 
         button:hover {
             background-color: var(--primary-hover);
-        }
-
-        button:active {
-            transform: scale(0.98);
         }
 
         .btn-export {
@@ -148,7 +136,6 @@
             background-color: var(--btn-export-hover);
         }
 
-        /* Barra de Información de Búsqueda */
         .info-bar {
             display: flex;
             justify-content: space-between;
@@ -171,7 +158,6 @@
             color: var(--text-muted);
         }
 
-        /* Tabla KWIC */
         .table-responsive {
             overflow-x: auto;
             margin-top: 15px;
@@ -192,7 +178,6 @@
             padding: 14px 12px;
             text-align: left;
             font-weight: 600;
-            letter-spacing: 0.3px;
         }
 
         td {
@@ -208,7 +193,6 @@
             font-weight: 600;
             color: #ffffff;
             background-color: var(--badge-bg);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .archivo-col {
@@ -243,7 +227,6 @@
             background-color: #f2f7f4;
         }
 
-        /* Paginación */
         .pagination {
             display: flex;
             justify-content: center;
@@ -266,7 +249,6 @@
             font-weight: bold;
         }
 
-        /* Sección Acerca de / Explicación */
         .about-section p {
             font-size: 1.05rem;
             color: var(--text-color);
@@ -288,9 +270,8 @@
             border-left: 4px solid var(--primary-color);
             border-radius: 0 8px 8px 0;
             font-size: 0.98rem;
-            border-top: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-color);
         }
 
         .about-section li strong {
@@ -299,4 +280,230 @@
 
         footer {
             text-align: center;
-            padding: 2
+            padding: 25px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--header-bg);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mens Corpora</h1>
+        <p>Plataforma de Consulta y Concordancias Lingüísticas</p>
+    </header>
+
+    <div class="container">
+
+        <section class="card">
+            <h2>Buscador</h2>
+            
+            <div class="filters-grid">
+                <input type="text" id="term" placeholder="Escribe un término a consultar (ej. mente, razón...)" onkeypress="if(event.key==='Enter') realizarBusqueda()">
+                
+                <select id="subcorpus-select">
+                    <option value="Todos">Todos los corpus</option>
+                    <option value="Mentes">MentEs (Castellano)</option>
+                    <option value="Demens">DeMens (Alemán)</option>
+                    <option value="Es Contraste">Contraste ES (Prensa)</option>
+                    <option value="De Contraste">Contraste DE (Prensa)</option>
+                </select>
+
+                <select id="ventana-select">
+                    <option value="5">Ventana: 5 palabras</option>
+                    <option value="7" selected>Ventana: 7 palabras</option>
+                    <option value="10">Ventana: 10 palabras</option>
+                    <option value="15">Ventana: 15 palabras</option>
+                </select>
+
+                <div>
+                    <button onclick="realizarBusqueda()">Buscar</button>
+                    <button id="btn-csv" class="btn-export" onclick="exportarCSV()" style="display:none;">Exportar CSV</button>
+                </div>
+            </div>
+
+            <div id="info-bar" class="info-bar" style="display:none;">
+                <div id="stats" class="stats"></div>
+                <div id="distribucion" class="distribucion"></div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="tabla-kwic" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Corpus</th>
+                            <th style="width: 16%;">Documento</th>
+                            <th style="text-align: right;">Contexto Izquierdo</th>
+                            <th style="text-align: center;">Término</th>
+                            <th style="text-align: left;">Contexto Derecho</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultados-body"></tbody>
+                </table>
+            </div>
+
+            <div id="pagination" class="pagination"></div>
+        </section>
+
+        <section class="card about-section">
+            <h2>Sobre los corpus</h2>
+            <p>
+                Mens Corpora es un grupo de corpus construidos para el estudio diacrónico del lenguaje de la salud mental (Garriga Martínez, 2026). Estos corpus son de carácter escrito, especializado e histórico, y comprenden textos de entre 1850 y 1950. Actualmente, los corpus disponibles son los siguientes:
+            </p>
+            <ul>
+                <li><strong>MentEs:</strong> corpus de lengua castellana.</li>
+                <li><strong>DeMens:</strong> corpus de lengua alemana.</li>
+                <li><strong>Contraste ES:</strong> corpus de contraste (prensa) de lengua castellana.</li>
+                <li><strong>Contraste DE:</strong> corpus de contraste (prensa) de lengua alemana.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer>
+        Mens Corpora &copy; 2026 &bull; Todos los derechos reservados.
+    </footer>
+
+    <script>
+        const API_URL = "https://menscorpora.pythonanywhere.com/api/buscar";
+        
+        let todosLosResultados = [];
+        let paginaActual = 1;
+        const resultadosPorPagina = 50;
+
+        async function realizarBusqueda() {
+            const query = document.getElementById('term').value.trim();
+            const subcorpus = document.getElementById('subcorpus-select').value;
+            const ventana = document.getElementById('ventana-select').value;
+
+            if (!query) return;
+
+            document.getElementById('info-bar').style.display = 'flex';
+            document.getElementById('stats').innerText = "Consultando base de datos...";
+            document.getElementById('distribucion').innerText = "";
+            document.getElementById('tabla-kwic').style.display = 'none';
+            document.getElementById('btn-csv').style.display = 'none';
+            document.getElementById('pagination').innerHTML = '';
+
+            try {
+                const url = `${API_URL}?q=${encodeURIComponent(query)}&subcorpus=${encodeURIComponent(subcorpus)}&ventana=${ventana}`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data.error || data.total === 0) {
+                    document.getElementById('stats').innerText = data.error || "No se encontraron coincidencias para los criterios seleccionados.";
+                    return;
+                }
+
+                todosLosResultados = data.resultados;
+                paginaActual = 1;
+
+                document.getElementById('stats').innerText = `Ocurrencias encontradas: ${data.total.toLocaleString()}`;
+                
+                if (data.distribucion) {
+                    const distTexto = Object.entries(data.distribucion)
+                        .map(([sub, cant]) => `<b>${obtenerNombreOficial(sub)}:</b> ${cant.toLocaleString()}`)
+                        .join(" | ");
+                    document.getElementById('distribucion').innerHTML = distTexto;
+                }
+
+                document.getElementById('btn-csv').style.display = 'inline-block';
+                document.getElementById('tabla-kwic').style.display = 'table';
+                
+                renderizarPagina();
+
+            } catch (err) {
+                document.getElementById('stats').innerText = "Error de conexión con el servidor.";
+            }
+        }
+
+        function obtenerNombreOficial(nombreDb) {
+            const mapa = {
+                'Mentes': 'MentEs',
+                'Demens': 'DeMens',
+                'Es Contraste': 'Contraste ES',
+                'De Contraste': 'Contraste DE'
+            };
+            return mapa[nombreDb] || nombreDb;
+        }
+
+        function renderizarPagina() {
+            const tbody = document.getElementById('resultados-body');
+            tbody.innerHTML = '';
+
+            const inicio = (paginaActual - 1) * resultadosPorPagina;
+            const fin = inicio + resultadosPorPagina;
+            const paginaResultados = todosLosResultados.slice(inicio, fin);
+
+            paginaResultados.forEach(r => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="sub-badge">${obtenerNombreOficial(r.subcorpus)}</span></td>
+                    <td class="archivo-col">${r.id_archivo}</td>
+                    <td class="izq">${r.contexto_izq}</td>
+                    <td class="kw">${r.palabra_clave}</td>
+                    <td class="der">${r.contexto_der}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            renderizarPaginacion();
+        }
+
+        function renderizarPaginacion() {
+            const container = document.getElementById('pagination');
+            container.innerHTML = '';
+
+            const totalPaginas = Math.ceil(todosLosResultados.length / resultadosPorPagina);
+            if (totalPaginas <= 1) return;
+
+            const maxBotones = 7;
+            let inicioPag = Math.max(1, paginaActual - 3);
+            let finPag = Math.min(totalPaginas, inicioPag + maxBotones - 1);
+
+            for (let i = inicioPag; i <= finPag; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                if (i === paginaActual) btn.classList.add('active');
+                btn.onclick = () => {
+                    paginaActual = i;
+                    renderizarPagina();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+                container.appendChild(btn);
+            }
+        }
+
+        function exportarCSV() {
+            if (todosLosResultados.length === 0) return;
+
+            let csvRows = ["Corpus,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"];
+
+            todosLosResultados.forEach(r => {
+                const fila = [
+                    `"${obtenerNombreOficial(r.subcorpus)}"`,
+                    `"${r.id_archivo}"`,
+                    `"${r.contexto_izq.replace(/"/g, '""')}"`,
+                    `"${r.palabra_clave}"`,
+                    `"${r.contexto_der.replace(/"/g, '""')}"`
+                ].join(",");
+                csvRows.push(fila);
+            });
+
+            const csvString = "\uFEFF" + csvRows.join("\n");
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            const termino = document.getElementById('term').value.trim();
+            link.setAttribute("href", url);
+            link.setAttribute("download", `concordancias_kwic_${termino}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
