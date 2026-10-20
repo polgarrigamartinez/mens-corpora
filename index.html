@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mens Corpora - Plataforma de Consulta Lingüística</title>
+    <title>Mens Corpora</title>
     <style>
         :root {
-            --primary-color: #4a7c59;
-            --primary-hover: #3b6346;
-            --header-bg: #e8f2ea;
-            --header-title: #1b4332;
-            --header-subtitle: #4a7c59;
-            --bg-color: #f4f7f4;
-            --card-bg: #ffffff;
-            --text-color: #1a2e26;
-            --text-muted: #5a6e62;
-            --border-color: #dce6df;
-            --info-bg: #eaf4f0;
-            --kw-bg: #d8f3dc;
-            --kw-color: #1b4332;
-            --badge-bg: #52b788;
-            --btn-export: #2d6a4f;
+            --primary-color: #4a7c59;          /* Verde sabio suave y legible */
+            --primary-hover: #3b6346;          /* Verde oscuro para hovers */
+            --header-bg: #e8f2ea;              /* Verde pastel pálido para cabecera */
+            --header-title: #1b4332;           /* Verde bosque profundo */
+            --bg-color: #f4f7f4;               /* Fondo general gris-verde */
+            --card-bg: #ffffff;                /* Tarjetas blancas */
+            --text-color: #1a2e26;             /* Texto principal */
+            --text-muted: #5a6e62;             /* Texto secundario suave */
+            --border-color: #dce6df;           /* Bordes verde ceniza */
+            --info-bg: #eaf4f0;                 /* Fondo de barra de info */
+            --kw-bg: #d8f3dc;                  /* Resaltado término en verde menta */
+            --kw-color: #1b4332;               /* Texto del término */
+            --badge-bg: #52b788;               /* Badge subcorpus */
+            --btn-export: #2d6a4f;             /* Botón exportar CSV */
             --btn-export-hover: #1b4332;
         }
 
@@ -33,10 +32,11 @@
             line-height: 1.6;
         }
 
+        /* Cabecera Principal (sin subcabecera) */
         header {
             background-color: var(--header-bg);
             color: var(--header-title);
-            padding: 40px 20px;
+            padding: 35px 20px;
             text-align: center;
             border-bottom: 2px solid var(--border-color);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
@@ -44,17 +44,10 @@
 
         header h1 {
             margin: 0;
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             font-weight: 700;
             letter-spacing: 0.5px;
             color: var(--header-title);
-        }
-
-        header p {
-            margin: 8px 0 0 0;
-            font-size: 1.1rem;
-            color: var(--header-subtitle);
-            font-weight: 500;
         }
 
         .container {
@@ -63,6 +56,7 @@
             padding: 0 20px;
         }
 
+        /* Tarjetas / Secciones */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -80,6 +74,7 @@
             padding-bottom: 12px;
         }
 
+        /* Controles del Buscador */
         .filters-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr auto;
@@ -121,10 +116,15 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
         }
 
         button:hover {
             background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         .btn-export {
@@ -136,6 +136,7 @@
             background-color: var(--btn-export-hover);
         }
 
+        /* Barra de Información de Búsqueda */
         .info-bar {
             display: flex;
             justify-content: space-between;
@@ -158,6 +159,7 @@
             color: var(--text-muted);
         }
 
+        /* Tabla KWIC */
         .table-responsive {
             overflow-x: auto;
             margin-top: 15px;
@@ -227,12 +229,14 @@
             background-color: #f2f7f4;
         }
 
+        /* Paginación Avanzada */
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 6px;
             margin-top: 25px;
+            flex-wrap: wrap;
         }
 
         .pagination button {
@@ -241,6 +245,14 @@
             background-color: #e2ece5;
             color: var(--header-title);
             border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            color: white;
         }
 
         .pagination button.active {
@@ -249,6 +261,21 @@
             font-weight: bold;
         }
 
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background-color: #e2ece5;
+            color: var(--text-muted);
+        }
+
+        .pagination-ellipsis {
+            padding: 0 6px;
+            color: var(--text-muted);
+            font-weight: bold;
+            user-select: none;
+        }
+
+        /* Sección Acerca de / Explicación */
         .about-section p {
             font-size: 1.05rem;
             color: var(--text-color);
@@ -291,13 +318,14 @@
 </head>
 <body>
 
+    <!-- CABECERA PRINCIPAL -->
     <header>
         <h1>Mens Corpora</h1>
-        <p>Plataforma de Consulta y Concordancias Lingüísticas</p>
     </header>
 
     <div class="container">
 
+        <!-- SECCIÓN 1: BUSCADOR -->
         <section class="card">
             <h2>Buscador</h2>
             
@@ -348,6 +376,7 @@
             <div id="pagination" class="pagination"></div>
         </section>
 
+        <!-- SECCIÓN 2: DESCRIPCIÓN DE LOS CORPUS -->
         <section class="card about-section">
             <h2>Sobre los corpus</h2>
             <p>
@@ -460,21 +489,79 @@
             const totalPaginas = Math.ceil(todosLosResultados.length / resultadosPorPagina);
             if (totalPaginas <= 1) return;
 
-            const maxBotones = 7;
-            let inicioPag = Math.max(1, paginaActual - 3);
-            let finPag = Math.min(totalPaginas, inicioPag + maxBotones - 1);
-
-            for (let i = inicioPag; i <= finPag; i++) {
-                const btn = document.createElement('button');
-                btn.innerText = i;
-                if (i === paginaActual) btn.classList.add('active');
-                btn.onclick = () => {
-                    paginaActual = i;
+            // Botón "Anterior"
+            const btnAnt = document.createElement('button');
+            btnAnt.innerText = '« Anterior';
+            btnAnt.disabled = (paginaActual === 1);
+            btnAnt.onclick = () => {
+                if (paginaActual > 1) {
+                    paginaActual--;
                     renderizarPagina();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-                container.appendChild(btn);
+                }
+            };
+            container.appendChild(btnAnt);
+
+            // Calcular lista dinámica de números de página a mostrar
+            let paginasAMostrar = [];
+
+            if (totalPaginas <= 7) {
+                for (let i = 1; i <= totalPaginas; i++) paginasAMostrar.push(i);
+            } else {
+                paginasAMostrar.push(1);
+
+                let inicio = Math.max(2, paginaActual - 2);
+                let fin = Math.min(totalPaginas - 1, paginaActual + 2);
+
+                if (paginaActual <= 4) {
+                    inicio = 2;
+                    fin = 5;
+                } else if (paginaActual >= totalPaginas - 3) {
+                    inicio = totalPaginas - 4;
+                    fin = totalPaginas - 1;
+                }
+
+                if (inicio > 2) paginasAMostrar.push('...');
+
+                for (let i = inicio; i <= fin; i++) paginasAMostrar.push(i);
+
+                if (fin < totalPaginas - 1) paginasAMostrar.push('...');
+
+                paginasAMostrar.push(totalPaginas);
             }
+
+            // Renderizar botones numéricos y puntos suspensivos
+            paginasAMostrar.forEach(p => {
+                if (p === '...') {
+                    const span = document.createElement('span');
+                    span.innerText = '...';
+                    span.className = 'pagination-ellipsis';
+                    container.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.innerText = p;
+                    if (p === paginaActual) btn.classList.add('active');
+                    btn.onclick = () => {
+                        paginaActual = p;
+                        renderizarPagina();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+                    container.appendChild(btn);
+                }
+            });
+
+            // Botón "Siguiente"
+            const btnSig = document.createElement('button');
+            btnSig.innerText = 'Siguiente »';
+            btnSig.disabled = (paginaActual === totalPaginas);
+            btnSig.onclick = () => {
+                if (paginaActual < totalPaginas) {
+                    paginaActual++;
+                    renderizarPagina();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+            container.appendChild(btnSig);
         }
 
         function exportarCSV() {
