@@ -6,17 +6,17 @@
     <title>Mens Corpora - Plataforma de Consulta Lingüística</title>
     <style>
         :root {
-            --primary-color: #4a7c59;          /* Verde sabio / sage suave pero legible */
-            --primary-hover: #3b6346;          /* Verde ligeramente más oscuro para hovers */
+            --primary-color: #4a7c59;          /* Verde sabio suave y legible */
+            --primary-hover: #3b6346;          /* Verde oscuro para efectos hover */
             --header-bg: #e8f2ea;              /* Verde pastel pálido para la cabecera */
             --header-title: #1b4332;           /* Verde bosque profundo para el título */
             --header-subtitle: #4a7c59;        /* Verde suave para subtítulo */
             --bg-color: #f4f7f4;               /* Fondo general gris-verde muy suave */
             --card-bg: #ffffff;                /* Blanco puro para tarjetas */
-            --text-color: #1a2e26;             /* Carbón oscuro con matiz verde para alta legibilidad */
+            --text-color: #1a2e26;             /* Carbón oscuro con matiz verde */
             --text-muted: #5a6e62;             /* Texto secundario suave */
-            --border-color: #dce6df;           /* Bordes sutiles en tono verde ceniza */
-            --info-bg: #eaf4f0;                 /* Fondo de la barra de info */
+            --border-color: #dce6df;           /* Bordes sutiles en verde ceniza */
+            --info-bg: #eaf4f0;                 /* Fondo de la barra de información */
             --kw-bg: #d8f3dc;                  /* Resaltado de palabra clave en verde pastel menta */
             --kw-color: #1b4332;               /* Texto de palabra clave en verde profundo */
             --badge-bg: #52b788;               /* Insignia de corpus */
@@ -187,4 +187,116 @@
         }
 
         th {
-            background
+            background-color: #274035;
+            color: #ffffff;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        td {
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sub-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: var(--badge-bg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .archivo-col {
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+
+        .izq {
+            text-align: right;
+            width: 33%;
+            color: #2c3e35;
+        }
+
+        .kw {
+            text-align: center;
+            width: 8%;
+            font-weight: 700;
+            color: var(--kw-color);
+            background-color: var(--kw-bg);
+            border-radius: 5px;
+            padding: 5px 8px;
+            border: 1px solid #b7e4c7;
+        }
+
+        .der {
+            text-align: left;
+            width: 33%;
+            color: #2c3e35;
+        }
+
+        tr:hover {
+            background-color: #f2f7f4;
+        }
+
+        /* Paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 25px;
+        }
+
+        .pagination button {
+            padding: 8px 14px;
+            font-size: 13.5px;
+            background-color: #e2ece5;
+            color: var(--header-title);
+            border-radius: 6px;
+        }
+
+        .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Sección Acerca de / Explicación */
+        .about-section p {
+            font-size: 1.05rem;
+            color: var(--text-color);
+            margin-bottom: 18px;
+        }
+
+        .about-section ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .about-section li {
+            padding: 12px 16px;
+            background: #f4f8f5;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.98rem;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .about-section li strong {
+            color: var(--header-title);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2
