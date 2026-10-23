@@ -6,20 +6,20 @@
     <title>Mens Corpora</title>
     <style>
         :root {
-            --primary-color: #4a7c59;          /* Verde sabio suave y legible */
-            --primary-hover: #3b6346;          /* Verde oscuro para hovers */
-            --header-bg: #e8f2ea;              /* Verde pastel pálido para cabecera */
-            --header-title: #1b4332;           /* Verde bosque profundo */
-            --bg-color: #f4f7f4;               /* Fondo general gris-verde */
+            --primary-color: #4a7c59;          /* Verde sabio suave */
+            --primary-hover: #3b6346;          /* Verde oscuro */
+            --header-bg: #e8f2ea;              /* Verde pastel */
+            --header-title: #1b4332;           /* Verde bosque */
+            --bg-color: #f4f7f4;               /* Fondo general */
             --card-bg: #ffffff;                /* Tarjetas blancas */
             --text-color: #1a2e26;             /* Texto principal */
-            --text-muted: #5a6e62;             /* Texto secundario suave */
-            --border-color: #dce6df;           /* Bordes verde ceniza */
-            --info-bg: #eaf4f0;                 /* Fondo de barra de info */
-            --kw-bg: #d8f3dc;                  /* Resaltado término en verde menta */
-            --kw-color: #1b4332;               /* Texto del término */
-            --badge-bg: #52b788;               /* Badge subcorpus */
-            --btn-export: #2d6a4f;             /* Botón exportar CSV */
+            --text-muted: #5a6e62;             /* Texto secundario */
+            --border-color: #dce6df;           /* Bordes */
+            --info-bg: #eaf4f0;                 /* Barra de info */
+            --kw-bg: #d8f3dc;                  /* Término resaltado */
+            --kw-color: #1b4332;               
+            --badge-bg: #52b788;               /* Badges */
+            --btn-export: #2d6a4f;             
             --btn-export-hover: #1b4332;
         }
 
@@ -32,7 +32,6 @@
             line-height: 1.6;
         }
 
-        /* Cabecera Principal (sin subcabecera) */
         header {
             background-color: var(--header-bg);
             color: var(--header-title);
@@ -56,7 +55,6 @@
             padding: 0 20px;
         }
 
-        /* Tarjetas / Secciones */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -74,7 +72,6 @@
             padding-bottom: 12px;
         }
 
-        /* Controles del Buscador */
         .filters-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr auto;
@@ -136,7 +133,6 @@
             background-color: var(--btn-export-hover);
         }
 
-        /* Barra de Información de Búsqueda */
         .info-bar {
             display: flex;
             justify-content: space-between;
@@ -159,7 +155,6 @@
             color: var(--text-muted);
         }
 
-        /* Tabla KWIC */
         .table-responsive {
             overflow-x: auto;
             margin-top: 15px;
@@ -198,13 +193,14 @@
         }
 
         .archivo-col {
-            color: var(--text-muted);
-            font-size: 0.85em;
+            color: var(--header-title);
+            font-weight: 600;
+            font-size: 0.9em;
         }
 
         .izq {
             text-align: right;
-            width: 33%;
+            width: 32%;
             color: #2c3e35;
         }
 
@@ -221,7 +217,7 @@
 
         .der {
             text-align: left;
-            width: 33%;
+            width: 32%;
             color: #2c3e35;
         }
 
@@ -229,7 +225,6 @@
             background-color: #f2f7f4;
         }
 
-        /* Paginación Avanzada */
         .pagination {
             display: flex;
             justify-content: center;
@@ -275,7 +270,6 @@
             user-select: none;
         }
 
-        /* Sección Acerca de / Explicación */
         .about-section p {
             font-size: 1.05rem;
             color: var(--text-color);
@@ -298,7 +292,6 @@
             border-radius: 0 8px 8px 0;
             font-size: 0.98rem;
             border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary-color);
         }
 
         .about-section li strong {
@@ -318,14 +311,12 @@
 </head>
 <body>
 
-    <!-- CABECERA PRINCIPAL -->
     <header>
         <h1>Mens Corpora</h1>
     </header>
 
     <div class="container">
 
-        <!-- SECCIÓN 1: BUSCADOR -->
         <section class="card">
             <h2>Buscador</h2>
             
@@ -363,7 +354,7 @@
                     <thead>
                         <tr>
                             <th style="width: 12%;">Corpus</th>
-                            <th style="width: 16%;">Documento</th>
+                            <th style="width: 24%;">Obra / Título (Año)</th>
                             <th style="text-align: right;">Contexto Izquierdo</th>
                             <th style="text-align: center;">Término</th>
                             <th style="text-align: left;">Contexto Derecho</th>
@@ -376,7 +367,6 @@
             <div id="pagination" class="pagination"></div>
         </section>
 
-        <!-- SECCIÓN 2: DESCRIPCIÓN DE LOS CORPUS -->
         <section class="card about-section">
             <h2>Sobre los corpus</h2>
             <p>
@@ -468,10 +458,20 @@
             const paginaResultados = todosLosResultados.slice(inicio, fin);
 
             paginaResultados.forEach(r => {
+                let textoObra = '—';
+                if (r.titulo && r.titulo !== '—' && r.titulo.toString().toLowerCase() !== 'nan') {
+                    textoObra = r.titulo;
+                    if (r.anio && r.anio !== '—' && r.anio.toString().toLowerCase() !== 'nan') {
+                        textoObra += ` (${r.anio})`;
+                    }
+                } else if (r.id_archivo && r.id_archivo.toString().toLowerCase() !== 'nan') {
+                    textoObra = r.id_archivo;
+                }
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td><span class="sub-badge">${obtenerNombreOficial(r.subcorpus)}</span></td>
-                    <td class="archivo-col">${r.id_archivo}</td>
+                    <td class="archivo-col" title="ID Archivo: ${r.id_archivo}">${textoObra}</td>
                     <td class="izq">${r.contexto_izq}</td>
                     <td class="kw">${r.palabra_clave}</td>
                     <td class="der">${r.contexto_der}</td>
@@ -489,7 +489,6 @@
             const totalPaginas = Math.ceil(todosLosResultados.length / resultadosPorPagina);
             if (totalPaginas <= 1) return;
 
-            // Botón "Anterior"
             const btnAnt = document.createElement('button');
             btnAnt.innerText = '« Anterior';
             btnAnt.disabled = (paginaActual === 1);
@@ -502,7 +501,6 @@
             };
             container.appendChild(btnAnt);
 
-            // Calcular lista dinámica de números de página a mostrar
             let paginasAMostrar = [];
 
             if (totalPaginas <= 7) {
@@ -530,7 +528,6 @@
                 paginasAMostrar.push(totalPaginas);
             }
 
-            // Renderizar botones numéricos y puntos suspensivos
             paginasAMostrar.forEach(p => {
                 if (p === '...') {
                     const span = document.createElement('span');
@@ -550,7 +547,6 @@
                 }
             });
 
-            // Botón "Siguiente"
             const btnSig = document.createElement('button');
             btnSig.innerText = 'Siguiente »';
             btnSig.disabled = (paginaActual === totalPaginas);
@@ -567,11 +563,15 @@
         function exportarCSV() {
             if (todosLosResultados.length === 0) return;
 
-            let csvRows = ["Corpus,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"];
+            let csvRows = ["Corpus,Obra_Titulo,Anio,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"];
 
             todosLosResultados.forEach(r => {
+                const tituloStr = (r.titulo && r.titulo !== 'nan') ? r.titulo : '—';
+                const anioStr = (r.anio && r.anio !== 'nan') ? r.anio : '—';
                 const fila = [
                     `"${obtenerNombreOficial(r.subcorpus)}"`,
+                    `"${tituloStr.replace(/"/g, '""')}"`,
+                    `"${anioStr}"`,
                     `"${r.id_archivo}"`,
                     `"${r.contexto_izq.replace(/"/g, '""')}"`,
                     `"${r.palabra_clave}"`,
