@@ -6,20 +6,20 @@
     <title>Mens Corpora</title>
     <style>
         :root {
-            --primary-color: #4a7c59;          /* Verde sabio suave */
-            --primary-hover: #3b6346;          /* Verde oscuro */
-            --header-bg: #e8f2ea;              /* Verde pastel */
-            --header-title: #1b4332;           /* Verde bosque */
-            --bg-color: #f4f7f4;               /* Fondo general */
-            --card-bg: #ffffff;                /* Tarjetas blancas */
-            --text-color: #1a2e26;             /* Texto principal */
-            --text-muted: #5a6e62;             /* Texto secundario */
-            --border-color: #dce6df;           /* Bordes */
-            --info-bg: #eaf4f0;                 /* Barra de info */
-            --kw-bg: #d8f3dc;                  /* Término resaltado */
-            --kw-color: #1b4332;               
-            --badge-bg: #52b788;               /* Badges */
-            --btn-export: #2d6a4f;             
+            --primary-color: #4a7c59;
+            --primary-hover: #3b6346;
+            --header-bg: #e8f2ea;
+            --header-title: #1b4332;
+            --bg-color: #f4f7f4;
+            --card-bg: #ffffff;
+            --text-color: #1a2e26;
+            --text-muted: #5a6e62;
+            --border-color: #dce6df;
+            --info-bg: #eaf4f0;
+            --kw-bg: #d8f3dc;
+            --kw-color: #1b4332;
+            --badge-bg: #52b788;
+            --btn-export: #2d6a4f;
             --btn-export-hover: #1b4332;
         }
 
@@ -50,7 +50,7 @@
         }
 
         .container {
-            max-width: 1250px;
+            max-width: 1350px;
             margin: 35px auto;
             padding: 0 20px;
         }
@@ -165,7 +165,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13.5px;
             background-color: #ffffff;
         }
 
@@ -195,18 +195,22 @@
         .archivo-col {
             color: var(--header-title);
             font-weight: 600;
-            font-size: 0.9em;
+        }
+
+        .autor-col {
+            color: var(--text-muted);
+            font-style: italic;
         }
 
         .izq {
             text-align: right;
-            width: 32%;
+            width: 21%;
             color: #2c3e35;
         }
 
         .kw {
             text-align: center;
-            width: 8%;
+            width: 7%;
             font-weight: 700;
             color: var(--kw-color);
             background-color: var(--kw-bg);
@@ -217,7 +221,7 @@
 
         .der {
             text-align: left;
-            width: 32%;
+            width: 21%;
             color: #2c3e35;
         }
 
@@ -353,8 +357,9 @@
                 <table id="tabla-kwic" style="display:none;">
                     <thead>
                         <tr>
-                            <th style="width: 12%;">Corpus</th>
-                            <th style="width: 24%;">Obra / Título (Año)</th>
+                            <th style="width: 10%;">Corpus</th>
+                            <th style="width: 22%;">Obra / Título (Año)</th>
+                            <th style="width: 16%;">Autor/Director/Editor</th>
                             <th style="text-align: right;">Contexto Izquierdo</th>
                             <th style="text-align: center;">Término</th>
                             <th style="text-align: left;">Contexto Derecho</th>
@@ -468,10 +473,15 @@
                     textoObra = r.id_archivo;
                 }
 
+                const autorTexto = (r.autor && r.autor !== '—' && r.autor.toString().toLowerCase() !== 'nan') 
+                    ? r.autor 
+                    : '—';
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td><span class="sub-badge">${obtenerNombreOficial(r.subcorpus)}</span></td>
                     <td class="archivo-col" title="ID Archivo: ${r.id_archivo}">${textoObra}</td>
+                    <td class="autor-col">${autorTexto}</td>
                     <td class="izq">${r.contexto_izq}</td>
                     <td class="kw">${r.palabra_clave}</td>
                     <td class="der">${r.contexto_der}</td>
@@ -563,14 +573,16 @@
         function exportarCSV() {
             if (todosLosResultados.length === 0) return;
 
-            let csvRows = ["Corpus,Obra_Titulo,Anio,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"];
+            let csvRows = ["Corpus,Obra_Titulo,Autor_Director_Editor,Anio,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"];
 
             todosLosResultados.forEach(r => {
                 const tituloStr = (r.titulo && r.titulo !== 'nan') ? r.titulo : '—';
+                const autorStr = (r.autor && r.autor !== 'nan') ? r.autor : '—';
                 const anioStr = (r.anio && r.anio !== 'nan') ? r.anio : '—';
                 const fila = [
                     `"${obtenerNombreOficial(r.subcorpus)}"`,
                     `"${tituloStr.replace(/"/g, '""')}"`,
+                    `"${autorStr.replace(/"/g, '""')}"`,
                     `"${anioStr}"`,
                     `"${r.id_archivo}"`,
                     `"${r.contexto_izq.replace(/"/g, '""')}"`,
