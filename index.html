@@ -35,18 +35,44 @@
         header {
             background-color: var(--header-bg);
             color: var(--header-title);
-            padding: 35px 20px;
-            text-align: center;
+            padding: 25px 30px;
             border-bottom: 2px solid var(--border-color);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         }
 
+        .header-container {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
         header h1 {
             margin: 0;
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 700;
             letter-spacing: 0.5px;
             color: var(--header-title);
+        }
+
+        .lang-selector select {
+            padding: 8px 14px;
+            font-size: 14.5px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1.5px solid var(--primary-color);
+            background-color: #ffffff;
+            color: var(--header-title);
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .lang-selector select:focus {
+            border-color: var(--primary-hover);
         }
 
         .container {
@@ -316,35 +342,45 @@
 <body>
 
     <header>
-        <h1>Mens Corpora</h1>
+        <div class="header-container">
+            <h1>Mens Corpora</h1>
+            <div class="lang-selector">
+                <select id="lang-select" onchange="cambiarIdioma(this.value)">
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="en">🇬🇧 English</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="ca">🏴 Català</option>
+                </select>
+            </div>
+        </div>
     </header>
 
     <div class="container">
 
         <section class="card">
-            <h2>Buscador</h2>
+            <h2 data-i18n="search_card_title">Buscador</h2>
             
             <div class="filters-grid">
-                <input type="text" id="term" placeholder="Escribe un término a consultar (ej. mente, razón...)" onkeypress="if(event.key==='Enter') realizarBusqueda()">
+                <input type="text" id="term" data-i18n-placeholder="input_placeholder" placeholder="Escribe un término a consultar (ej. mente, razón...)" onkeypress="if(event.key==='Enter') realizarBusqueda()">
                 
                 <select id="subcorpus-select">
-                    <option value="Todos">Todos los corpus</option>
-                    <option value="Mentes">MentEs (Castellano)</option>
-                    <option value="Demens">DeMens (Alemán)</option>
-                    <option value="Es Contraste">Contraste ES (Prensa)</option>
-                    <option value="De Contraste">Contraste DE (Prensa)</option>
+                    <option value="Todos" data-i18n="subcorpus_all">Todos los corpus</option>
+                    <option value="Mentes" data-i18n="subcorpus_mentes">MentEs (Castellano)</option>
+                    <option value="Demens" data-i18n="subcorpus_demens">DeMens (Alemán)</option>
+                    <option value="Es Contraste" data-i18n="subcorpus_es_contraste">Contraste ES (Prensa)</option>
+                    <option value="De Contraste" data-i18n="subcorpus_de_contraste">Contraste DE (Prensa)</option>
                 </select>
 
                 <select id="ventana-select">
-                    <option value="5">Ventana: 5 palabras</option>
-                    <option value="7" selected>Ventana: 7 palabras</option>
-                    <option value="10">Ventana: 10 palabras</option>
-                    <option value="15">Ventana: 15 palabras</option>
+                    <option value="5" data-i18n="window_5">Ventana: 5 palabras</option>
+                    <option value="7" selected data-i18n="window_7">Ventana: 7 palabras</option>
+                    <option value="10" data-i18n="window_10">Ventana: 10 palabras</option>
+                    <option value="15" data-i18n="window_15">Ventana: 15 palabras</option>
                 </select>
 
                 <div>
-                    <button onclick="realizarBusqueda()">Buscar</button>
-                    <button id="btn-csv" class="btn-export" onclick="exportarCSV()" style="display:none;">Exportar CSV</button>
+                    <button onclick="realizarBusqueda()" data-i18n="btn_search">Buscar</button>
+                    <button id="btn-csv" class="btn-export" onclick="exportarCSV()" style="display:none;" data-i18n="btn_export">Exportar CSV</button>
                 </div>
             </div>
 
@@ -357,12 +393,12 @@
                 <table id="tabla-kwic" style="display:none;">
                     <thead>
                         <tr>
-                            <th style="width: 10%;">Corpus</th>
-                            <th style="width: 22%;">Obra / Título (Año)</th>
-                            <th style="width: 16%;">Autor/Director/Editor</th>
-                            <th style="text-align: right;">Contexto Izquierdo</th>
-                            <th style="text-align: center;">Término</th>
-                            <th style="text-align: left;">Contexto Derecho</th>
+                            <th style="width: 10%;" data-i18n="th_corpus">Corpus</th>
+                            <th style="width: 22%;" data-i18n="th_obra">Obra / Título (Año)</th>
+                            <th style="width: 16%;" data-i18n="th_autor">Autor/Director/Editor</th>
+                            <th style="text-align: right;" data-i18n="th_izq">Contexto Izquierdo</th>
+                            <th style="text-align: center;" data-i18n="th_kw">Término</th>
+                            <th style="text-align: left;" data-i18n="th_der">Contexto Derecho</th>
                         </tr>
                     </thead>
                     <tbody id="resultados-body"></tbody>
@@ -373,32 +409,214 @@
         </section>
 
         <section class="card about-section">
-            <h2>Sobre los corpus</h2>
-            <p>
+            <h2 data-i18n="about_title">Sobre los corpus</h2>
+            <p data-i18n="about_p">
                 Mens Corpora es un grupo de corpus construidos para el estudio diacrónico del lenguaje de la salud mental (Garriga Martínez, 2026). Estos corpus son de carácter escrito, especializado e histórico, y comprenden textos de entre 1850 y 1950. Actualmente, los corpus disponibles son los siguientes:
             </p>
             <ul>
-                <li><strong>MentEs:</strong> corpus de lengua castellana.</li>
-                <li><strong>DeMens:</strong> corpus de lengua alemana.</li>
-                <li><strong>Contraste ES:</strong> corpus de contraste (prensa) de lengua castellana.</li>
-                <li><strong>Contraste DE:</strong> corpus de contraste (prensa) de lengua alemana.</li>
+                <li data-i18n="about_mentes"><strong>MentEs:</strong> corpus de lengua castellana.</li>
+                <li data-i18n="about_demens"><strong>DeMens:</strong> corpus de lengua alemana.</li>
+                <li data-i18n="about_es_contraste"><strong>Contraste ES:</strong> corpus de contraste (prensa) de lengua castellana.</li>
+                <li data-i18n="about_de_contraste"><strong>Contraste DE:</strong> corpus de contraste (prensa) de lengua alemana.</li>
             </ul>
         </section>
 
     </div>
 
-    <footer>
+    <footer id="footer-text" data-i18n="footer">
         Mens Corpora &copy; 2026 &bull; Todos los derechos reservados.
     </footer>
 
     <script>
         const API_URL = "https://menscorpora.pythonanywhere.com/api/buscar";
         
+        const i18n = {
+            es: {
+                search_card_title: "Buscador",
+                input_placeholder: "Escribe un término a consultar (ej. mente, razón...)",
+                subcorpus_all: "Todos los corpus",
+                subcorpus_mentes: "MentEs (Castellano)",
+                subcorpus_demens: "DeMens (Alemán)",
+                subcorpus_es_contraste: "Contraste ES (Prensa)",
+                subcorpus_de_contraste: "Contraste DE (Prensa)",
+                window_5: "Ventana: 5 palabras",
+                window_7: "Ventana: 7 palabras",
+                window_10: "Ventana: 10 palabras",
+                window_15: "Ventana: 15 palabras",
+                btn_search: "Buscar",
+                btn_export: "Exportar CSV",
+                status_searching: "Consultando base de datos...",
+                status_no_results: "No se encontraron coincidencias para los criterios seleccionados.",
+                status_error_term: "Proporciona un término de búsqueda",
+                status_error_conn: "Error de conexión con el servidor.",
+                occurrences: "Ocurrencias encontradas: ",
+                th_corpus: "Corpus",
+                th_obra: "Obra / Título (Año)",
+                th_autor: "Autor/Director/Editor",
+                th_izq: "Contexto Izquierdo",
+                th_kw: "Término",
+                th_der: "Contexto Derecho",
+                btn_prev: "« Anterior",
+                btn_next: "Siguiente »",
+                about_title: "Sobre los corpus",
+                about_p: "Mens Corpora es un grupo de corpus construidos para el estudio diacrónico del lenguaje de la salud mental (Garriga Martínez, 2026). Estos corpus son de carácter escrito, especializado e histórico, y comprenden textos de entre 1850 y 1950. Actualmente, los corpus disponibles son los siguientes:",
+                about_mentes: "<strong>MentEs:</strong> corpus de lengua castellana.",
+                about_demens: "<strong>DeMens:</strong> corpus de lengua alemana.",
+                about_es_contraste: "<strong>Contraste ES:</strong> corpus de contraste (prensa) de lengua castellana.",
+                about_de_contraste: "<strong>Contraste DE:</strong> corpus de contraste (prensa) de lengua alemana.",
+                footer: "Mens Corpora &copy; 2026 &bull; Todos los derechos reservados.",
+                csv_header: "Corpus,Obra_Titulo,Autor_Director_Editor,Anio,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"
+            },
+            en: {
+                search_card_title: "Search Engine",
+                input_placeholder: "Enter a search term (e.g., mind, reason...)",
+                subcorpus_all: "All corpora",
+                subcorpus_mentes: "MentEs (Spanish)",
+                subcorpus_demens: "DeMens (German)",
+                subcorpus_es_contraste: "Contrast ES (Press)",
+                subcorpus_de_contraste: "Contrast DE (Press)",
+                window_5: "Window: 5 words",
+                window_7: "Window: 7 words",
+                window_10: "Window: 10 words",
+                window_15: "Window: 15 words",
+                btn_search: "Search",
+                btn_export: "Export CSV",
+                status_searching: "Querying database...",
+                status_no_results: "No matches found for the selected criteria.",
+                status_error_term: "Please enter a search term",
+                status_error_conn: "Server connection error.",
+                occurrences: "Occurrences found: ",
+                th_corpus: "Corpus",
+                th_obra: "Work / Title (Year)",
+                th_autor: "Author/Director/Editor",
+                th_izq: "Left Context",
+                th_kw: "Key Term",
+                th_der: "Right Context",
+                btn_prev: "« Previous",
+                btn_next: "Next »",
+                about_title: "About the Corpora",
+                about_p: "Mens Corpora is a suite of corpora designed for the diachronic study of mental health language (Garriga Martínez, 2026). These specialized, historical written corpora cover texts written between 1850 and 1950. Currently, the available corpora are:",
+                about_mentes: "<strong>MentEs:</strong> Spanish language corpus.",
+                about_demens: "<strong>DeMens:</strong> German language corpus.",
+                about_es_contraste: "<strong>Contraste ES:</strong> Spanish contrast corpus (press).",
+                about_de_contraste: "<strong>Contraste DE:</strong> German contrast corpus (press).",
+                footer: "Mens Corpora &copy; 2026 &bull; All rights reserved.",
+                csv_header: "Corpus,Work_Title,Author_Director_Editor,Year,File_ID,Left_Context,Key_Term,Right_Context"
+            },
+            de: {
+                search_card_title: "Suchmaschine",
+                input_placeholder: "Geben Sie einen Suchbegriff ein (z. B. Geist, Verstand...)",
+                subcorpus_all: "Alle Korpora",
+                subcorpus_mentes: "MentEs (Spanisch)",
+                subcorpus_demens: "DeMens (Deutsch)",
+                subcorpus_es_contraste: "Kontrast ES (Presse)",
+                subcorpus_de_contraste: "Kontrast DE (Presse)",
+                window_5: "Kontextfenster: 5 Wörter",
+                window_7: "Kontextfenster: 7 Wörter",
+                window_10: "Kontextfenster: 10 Wörter",
+                window_15: "Kontextfenster: 15 Wörter",
+                btn_search: "Suchen",
+                btn_export: "CSV exportieren",
+                status_searching: "Datenbank wird abgefragt...",
+                status_no_results: "Keine Treffer für die ausgewählten Kriterien gefunden.",
+                status_error_term: "Bitte geben Sie einen Suchbegriff ein",
+                status_error_conn: "Verbindungsfehler zum Server.",
+                occurrences: "Gefundene Treffer: ",
+                th_corpus: "Korpus",
+                th_obra: "Werk / Titel (Jahr)",
+                th_autor: "Autor/Direktor/Herausgeber",
+                th_izq: "Linker Kontext",
+                th_kw: "Suchbegriff",
+                th_der: "Rechter Kontext",
+                btn_prev: "« Zurück",
+                btn_next: "Weiter »",
+                about_title: "Über die Korpora",
+                about_p: "Mens Corpora ist eine Reihe von Korpora zur diachronen Untersuchung der Sprache der mentalen Gesundheit (Garriga Martínez, 2026). Es handelt sich um schriftliche, fachsprachliche und historische Korpora mit Texten aus den Jahren 1850 bis 1950. Derzeit sind folgende Korpora verfügbar:",
+                about_mentes: "<strong>MentEs:</strong> spanischsprachiges Korpus.",
+                about_demens: "<strong>DeMens:</strong> deutschsprachiges Korpus.",
+                about_es_contraste: "<strong>Contraste ES:</strong> spanisches Kontrastkorpus (Presse).",
+                about_de_contraste: "<strong>Contraste DE:</strong> deutsches Kontrastkorpus (Presse).",
+                footer: "Mens Corpora &copy; 2026 &bull; Alle Rechte vorbehalten.",
+                csv_header: "Korpus,Werk_Titel,Autor_Direktor_Herausgeber,Jahr,Datei_ID,Linker_Kontext,Suchbegriff,Rechter_Kontext"
+            },
+            ca: {
+                search_card_title: "Cercador",
+                input_placeholder: "Escriu un terme a consultar (ex. ment, raó...)",
+                subcorpus_all: "Tots els corpus",
+                subcorpus_mentes: "MentEs (Castellà)",
+                subcorpus_demens: "DeMens (Alemany)",
+                subcorpus_es_contraste: "Contrast ES (Premsa)",
+                subcorpus_de_contraste: "Contrast DE (Premsa)",
+                window_5: "Finestra: 5 paraules",
+                window_7: "Finestra: 7 paraules",
+                window_10: "Finestra: 10 paraules",
+                window_15: "Finestra: 15 paraules",
+                btn_search: "Cercar",
+                btn_export: "Exportar CSV",
+                status_searching: "Consultant la base de dades...",
+                status_no_results: "No s'han trobat coincidències per als criteris seleccionats.",
+                status_error_term: "Proporciona un terme de cerca",
+                status_error_conn: "Error de connexió amb el servidor.",
+                occurrences: "Ocurrències trobades: ",
+                th_corpus: "Corpus",
+                th_obra: "Obra / Títol (Any)",
+                th_autor: "Autor/Director/Editor",
+                th_izq: "Context Esquerre",
+                th_kw: "Terme",
+                th_der: "Context Dret",
+                btn_prev: "« Anterior",
+                btn_next: "Següent »",
+                about_title: "Sobre els corpus",
+                about_p: "Mens Corpora és un conjunt de corpus construïts per a l'estudi diacrònic del llenguatge de la salut mental (Garriga Martínez, 2026). Aquests corpus són de caràcter escrit, especialitzat i històric, i abasten textos d'entre 1850 i 1950. Actualment, els corpus disponibles són els següents:",
+                about_mentes: "<strong>MentEs:</strong> corpus de llengua castellana.",
+                about_demens: "<strong>DeMens:</strong> corpus de llengua alemanya.",
+                about_es_contraste: "<strong>Contraste ES:</strong> corpus de contrast (premsa) de llengua castellana.",
+                about_de_contraste: "<strong>Contraste DE:</strong> corpus de contrast (premsa) de llengua alemanya.",
+                footer: "Mens Corpora &copy; 2026 &bull; Tots els drets reservats.",
+                csv_header: "Corpus,Obra_Titol,Autor_Director_Editor,Any,ID_Fitxer,Context_Esquerre,Paraula_Clau,Context_Dret"
+            }
+        };
+
+        let idiomaActual = localStorage.getItem('menscorpora_lang') || 'es';
         let todosLosResultados = [];
         let paginaActual = 1;
         const resultadosPorPagina = 50;
 
+        function cambiarIdioma(lang) {
+            idiomaActual = lang;
+            localStorage.setItem('menscorpora_lang', lang);
+            aplicarIdioma();
+        }
+
+        function aplicarIdioma() {
+            const t = i18n[idiomaActual] || i18n.es;
+            document.getElementById('lang-select').value = idiomaActual;
+
+            // Elementos con data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.innerHTML = t[key];
+                }
+            });
+
+            // Input placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) {
+                    el.placeholder = t[key];
+                }
+            });
+
+            // Actualizar estado de información si hay resultados
+            if (todosLosResultados.length > 0) {
+                document.getElementById('stats').innerText = `${t.occurrences}${todosLosResultados.length.toLocaleString()}`;
+                renderizarPagina();
+            }
+        }
+
         async function realizarBusqueda() {
+            const t = i18n[idiomaActual] || i18n.es;
             const query = document.getElementById('term').value.trim();
             const subcorpus = document.getElementById('subcorpus-select').value;
             const ventana = document.getElementById('ventana-select').value;
@@ -406,7 +624,7 @@
             if (!query) return;
 
             document.getElementById('info-bar').style.display = 'flex';
-            document.getElementById('stats').innerText = "Consultando base de datos...";
+            document.getElementById('stats').innerText = t.status_searching;
             document.getElementById('distribucion').innerText = "";
             document.getElementById('tabla-kwic').style.display = 'none';
             document.getElementById('btn-csv').style.display = 'none';
@@ -418,14 +636,14 @@
                 const data = await res.json();
 
                 if (data.error || data.total === 0) {
-                    document.getElementById('stats').innerText = data.error || "No se encontraron coincidencias para los criterios seleccionados.";
+                    document.getElementById('stats').innerText = data.error || t.status_no_results;
                     return;
                 }
 
                 todosLosResultados = data.resultados;
                 paginaActual = 1;
 
-                document.getElementById('stats').innerText = `Ocurrencias encontradas: ${data.total.toLocaleString()}`;
+                document.getElementById('stats').innerText = `${t.occurrences}${data.total.toLocaleString()}`;
                 
                 if (data.distribucion) {
                     const distTexto = Object.entries(data.distribucion)
@@ -440,7 +658,7 @@
                 renderizarPagina();
 
             } catch (err) {
-                document.getElementById('stats').innerText = "Error de conexión con el servidor.";
+                document.getElementById('stats').innerText = t.status_error_conn;
             }
         }
 
@@ -455,6 +673,7 @@
         }
 
         function renderizarPagina() {
+            const t = i18n[idiomaActual] || i18n.es;
             const tbody = document.getElementById('resultados-body');
             tbody.innerHTML = '';
 
@@ -493,6 +712,7 @@
         }
 
         function renderizarPaginacion() {
+            const t = i18n[idiomaActual] || i18n.es;
             const container = document.getElementById('pagination');
             container.innerHTML = '';
 
@@ -500,7 +720,7 @@
             if (totalPaginas <= 1) return;
 
             const btnAnt = document.createElement('button');
-            btnAnt.innerText = '« Anterior';
+            btnAnt.innerText = t.btn_prev;
             btnAnt.disabled = (paginaActual === 1);
             btnAnt.onclick = () => {
                 if (paginaActual > 1) {
@@ -558,7 +778,7 @@
             });
 
             const btnSig = document.createElement('button');
-            btnSig.innerText = 'Siguiente »';
+            btnSig.innerText = t.btn_next;
             btnSig.disabled = (paginaActual === totalPaginas);
             btnSig.onclick = () => {
                 if (paginaActual < totalPaginas) {
@@ -572,8 +792,9 @@
 
         function exportarCSV() {
             if (todosLosResultados.length === 0) return;
+            const t = i18n[idiomaActual] || i18n.es;
 
-            let csvRows = ["Corpus,Obra_Titulo,Autor_Director_Editor,Anio,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"];
+            let csvRows = [t.csv_header];
 
             todosLosResultados.forEach(r => {
                 const tituloStr = (r.titulo && r.titulo !== 'nan') ? r.titulo : '—';
@@ -603,6 +824,9 @@
             link.click();
             document.body.removeChild(link);
         }
+
+        // Aplicar idioma al cargar la página
+        window.addEventListener('DOMContentLoaded', aplicarIdioma);
     </script>
 </body>
 </html>
