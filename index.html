@@ -387,7 +387,7 @@
             user-select: none;
         }
 
-        .about-section p, .cite-section p {
+        .about-section p {
             font-size: 1.05rem;
             color: var(--text-color);
             margin-bottom: 18px;
@@ -419,7 +419,7 @@
         .cite-list {
             list-style-type: none;
             padding-left: 0;
-            margin-top: 15px;
+            margin-top: 18px;
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -612,29 +612,26 @@
 
         <section class="card cite-section">
             <h2 data-i18n="cite_title">Cómo citar</h2>
-            <p data-i18n="cite_p">
-                Si utilizas Mens Corpora o su herramienta de búsqueda en tus investigaciones, por favor cita los recursos correspondientes mediante sus identificadores persistentes (DOI):
-            </p>
             <ul class="cite-list">
                 <li class="cite-item">
-                    <strong data-i18n="cite_software_label">Herramienta de búsqueda / Plataforma:</strong>
-                    Garriga Martínez, P. (2026). <em>Mens Corpora Web Search Engine (Code & Platform)</em> (Version 1.0.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.23955057" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23955057</a>
+                    <strong data-i18n="cite_software_label">Buscador web:</strong>
+                    Garriga Martínez, P. (2026). <em>Mens Corpora Web Search Engine (Code & Platform)</em> (<span data-i18n="version_str">Versión</span> 1.0.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.23955057" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23955057</a>
                 </li>
                 <li class="cite-item">
                     <strong data-i18n="cite_mentes_label">Subcorpus MentEs:</strong>
-                    Garriga Martínez, P. (2026). <em>MentEs: Corpus especializado para el estudio del lenguaje de la salud mental (castellano, 1850-1950)</em> (Version 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042258" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042258</a>
+                    Garriga Martínez, P. (2026). <em>MentEs: Corpus especializado para el estudio del lenguaje de la salud mental (castellano, 1850-1950)</em> (<span data-i18n="version_str">Versión</span> 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042258" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042258</a>
                 </li>
                 <li class="cite-item">
                     <strong data-i18n="cite_demens_label">Subcorpus DeMens:</strong>
-                    Garriga Martínez, P. (2026). <em>DeMens: Fachkorpus zur Erforschung der Sprache im Bereich der psychischen Gesundheit (Deutsch, 1850–1950)</em> (Version 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042556" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042556</a>
+                    Garriga Martínez, P. (2026). <em>DeMens: Fachkorpus zur Erforschung der Sprache im Bereich der psychischen Gesundheit (Deutsch, 1850–1950)</em> (<span data-i18n="version_str">Versión</span> 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042556" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042556</a>
                 </li>
                 <li class="cite-item">
                     <strong data-i18n="cite_es_contraste_label">Subcorpus Contraste ES:</strong>
-                    Garriga Martínez, P. (2026). <em>Contraste ES: corpus de prensa (castellano, 1850-1950)</em> (Version 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042700" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042700</a>
+                    Garriga Martínez, P. (2026). <em>Contraste ES: corpus de prensa (castellano, 1850-1950)</em> (<span data-i18n="version_str">Versión</span> 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042700" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042700</a>
                 </li>
                 <li class="cite-item">
                     <strong data-i18n="cite_de_contraste_label">Subcorpus Contraste DE:</strong>
-                    Garriga Martínez, P. (2026). <em>Kontrast DE: Pressekorpus (Deutsch, 1850–1950)</em> (Version 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042846" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042846</a>
+                    Garriga Martínez, P. (2026). <em>Kontrast DE: Pressekorpus (Deutsch, 1850–1950)</em> (<span data-i18n="version_str">Versión</span> 1.0.0) [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24042846" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.24042846</a>
                 </li>
             </ul>
         </section>
@@ -697,12 +694,12 @@
                 about_es_contraste: "<strong>Contraste ES:</strong> corpus de contraste (prensa) de lengua castellana.",
                 about_de_contraste: "<strong>Contraste DE:</strong> corpus de contraste (prensa) de lengua alemana.",
                 cite_title: "Cómo citar",
-                cite_p: "Si utilizas Mens Corpora o su herramienta de búsqueda en tus investigaciones, por favor cita los recursos correspondientes mediante sus identificadores persistentes (DOI):",
-                cite_software_label: "Herramienta de búsqueda / Plataforma:",
+                cite_software_label: "Buscador web:",
                 cite_mentes_label: "Subcorpus MentEs:",
                 cite_demens_label: "Subcorpus DeMens:",
                 cite_es_contraste_label: "Subcorpus Contraste ES:",
                 cite_de_contraste_label: "Subcorpus Contraste DE:",
+                version_str: "Versión",
                 footer_author_label: "Autor:",
                 csv_header: "Corpus,Obra_Titulo,Autor_Director_Editor,Anio,ID_Archivo,Contexto_Izquierdo,Palabra_Clave,Contexto_Derecho"
             },
@@ -741,12 +738,12 @@
                 about_es_contraste: "<strong>Contraste ES:</strong> Spanish contrast corpus (press).",
                 about_de_contraste: "<strong>Contraste DE:</strong> German contrast corpus (press).",
                 cite_title: "How to cite",
-                cite_p: "If you use Mens Corpora or its search engine in your research, please cite the corresponding resources using their persistent identifiers (DOIs):",
-                cite_software_label: "Search Engine / Platform:",
+                cite_software_label: "Web search engine:",
                 cite_mentes_label: "MentEs Subcorpus:",
                 cite_demens_label: "DeMens Subcorpus:",
                 cite_es_contraste_label: "Contrast ES Subcorpus:",
                 cite_de_contraste_label: "Contrast DE Subcorpus:",
+                version_str: "Version",
                 footer_author_label: "Author:",
                 csv_header: "Corpus,Work_Title,Author_Director_Editor,Year,File_ID,Left_Context,Key_Term,Right_Context"
             },
@@ -785,12 +782,12 @@
                 about_es_contraste: "<strong>Contraste ES:</strong> spanisches Kontrastkorpus (Presse).",
                 about_de_contraste: "<strong>Contraste DE:</strong> deutsches Kontrastkorpus (Presse).",
                 cite_title: "Zitierweise",
-                cite_p: "Wenn Sie Mens Corpora oder die Suchmaschine in Ihrer Forschung verwenden, zitieren Sie bitte die entsprechenden Ressourcen unter Verwendung ihrer persistenten Identifikatoren (DOIs):",
-                cite_software_label: "Suchmaschine / Plattform:",
+                cite_software_label: "Web-Suchmaschine:",
                 cite_mentes_label: "Subkorpus MentEs:",
                 cite_demens_label: "Subkorpus DeMens:",
                 cite_es_contraste_label: "Subkorpus Kontrast ES:",
                 cite_de_contraste_label: "Subkorpus Kontrast DE:",
+                version_str: "Version",
                 footer_author_label: "Autor:",
                 csv_header: "Korpus,Werk_Titel,Autor_Direktor_Herausgeber,Jahr,Datei_ID,Linker_Kontext,Suchbegriff,Rechter_Kontext"
             },
@@ -829,12 +826,12 @@
                 about_es_contraste: "<strong>Contraste ES:</strong> corpus de contrast (premsa) de llengua castellana.",
                 about_de_contraste: "<strong>Contraste DE:</strong> corpus de contrast (premsa) de llengua alemanya.",
                 cite_title: "Com citar",
-                cite_p: "Si utilitzes Mens Corpora o la seva eina de cerca en les teves investigacions, si us plau cita els recursos corresponents mitjançant els seus identificadors persistents (DOI):",
-                cite_software_label: "Eina de cerca / Plataforma:",
+                cite_software_label: "Cercador web:",
                 cite_mentes_label: "Subcorpus MentEs:",
                 cite_demens_label: "Subcorpus DeMens:",
                 cite_es_contraste_label: "Subcorpus Contrast ES:",
                 cite_de_contraste_label: "Subcorpus Contrast DE:",
+                version_str: "Versió",
                 footer_author_label: "Autor:",
                 csv_header: "Corpus,Obra_Titol,Autor_Director_Editor,Any,ID_Fitxer,Context_Esquerre,Paraula_Clau,Context_Dret"
             }
